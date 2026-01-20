@@ -27,21 +27,22 @@ https://user-images.githubusercontent.com/14187674/211327507-39f21a74-0a43-43f0-
 
 ```lua
 require('pckr').add({
-  "rikthepixel/lsp-file-operations.nvim",
-  requires = {
-    "nvim-lua/plenary.nvim",
+    "nvim-tree/nvim-tree.lua",
     -- Uncomment whichever supported plugin(s) you use
-    -- "nvim-tree/nvim-tree.lua",
     -- "nvim-neo-tree/neo-tree.nvim",
     -- "simonmclean/triptych.nvim"
+    requires = {
+        {
+            "rikthepixel/lsp-file-operations.nvim",
+            requires = { "nvim-lua/plenary.nvim" },
+            config = function()
+                --- @module "lsp-file-operations"
+                --- @type Config
+                return {}
+            end
+        }
+    }
   },
-  config = function()
-    --- @module "lsp-file-operations"
-    --- @type Config
-    local opts = {}
-
-    require("lsp-file-operations").setup(opts)
-  end,
 })
 ```
 
@@ -52,17 +53,19 @@ Note that the config function will let you skip the setup step.
 ```lua
 return {
   {
-    "rikthepixel/lsp-file-operations.nvim",
-    lazy = false,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
+    "nvim-tree/nvim-tree.lua",
     -- Uncomment whichever supported plugin(s) you use
-    -- "nvim-tree/nvim-tree.lua",
     -- "nvim-neo-tree/neo-tree.nvim",
     -- "simonmclean/triptych.nvim"
+    dependencies = {
+        {
+            "rikthepixel/lsp-file-operations.nvim",
+            --- @module "lsp-file-operations"
+            --- @type Config
+            opts = { }
+            dependencies = { "nvim-lua/plenary.nvim" }
+        }
     },
-    --- @module "lsp-file-operations"
-    --- @type Config
     opts = {}
   },
 }
